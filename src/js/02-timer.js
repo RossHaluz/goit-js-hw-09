@@ -46,8 +46,7 @@ intervalId = setInterval(startTaimer, 1000)
 }
 
 function startTaimer(evt) {
-  // timeEnd = new Date().getTime();
-  const setTime = timeEnd - timeStart
+  const setTime = timeEnd - new Date()
   const time = convertMs(setTime);
 
   uppdateCounter(time)
