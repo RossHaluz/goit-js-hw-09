@@ -1,3 +1,4 @@
+import Notiflix from 'notiflix';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
@@ -27,8 +28,9 @@ const options = {
 
     if (timeEnd > timeStart) {
       refs.startBtn.removeAttribute('disabled');
+      Notiflix.Notify.success('Щоб запустити таймер, нажміть кнопку Start')
     } else {
-      alert('Виберіть дату із майбутнього!');
+      Notiflix.Notify.failure('Виберіть дату із майбутнього!');
     }
   },
 };

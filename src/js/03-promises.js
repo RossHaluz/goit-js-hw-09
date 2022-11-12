@@ -1,3 +1,5 @@
+import Notiflix from 'notiflix';
+console.log(Notiflix)
 const form = document.querySelector('.form');
 let firstDelay = null;
 let delayStep = null;
@@ -35,10 +37,10 @@ function counterPromise(evt) {
   for (i = 1; i <= amountPromise; i += 1){
      createPromise(i, firstDelay)
   .then(({ position, delay }) => {
-    console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
+    Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
   })
   .catch(({ position, delay }) => {
-    console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+    Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
   });
     
     firstDelay += delayStep
