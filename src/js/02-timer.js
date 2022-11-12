@@ -1,20 +1,20 @@
-import flatpickr from "flatpickr";
-import "flatpickr/dist/flatpickr.min.css";
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
 
 const refs = {
-    days: document.querySelector('.value[data-days]'),
-    hours: document.querySelector('.value[data-hours]'),
-    minutes: document.querySelector('.value[data-minutes]'),
-    seconds: document.querySelector('.value[data-seconds]'),
-    startBtn: document.querySelector('button[data-start]'),
-    input: document.querySelector('#datetime-picker'),
-}
+  days: document.querySelector('.value[data-days]'),
+  hours: document.querySelector('.value[data-hours]'),
+  minutes: document.querySelector('.value[data-minutes]'),
+  seconds: document.querySelector('.value[data-seconds]'),
+  startBtn: document.querySelector('button[data-start]'),
+  input: document.querySelector('#datetime-picker'),
+};
 
 let timeStart = null;
 let timeEnd = null;
 let intervalId = null;
 
-refs.startBtn.setAttribute('disabled', true)
+refs.startBtn.setAttribute('disabled', true);
 
 const options = {
   enableTime: true,
@@ -26,30 +26,34 @@ const options = {
     timeStart = new Date();
 
     if (timeEnd > timeStart) {
-      alert('Для того, щоб розпочати таймер, натисніть кнопку Start')
-      refs.startBtn.removeAttribute('disabled')
+      refs.startBtn.removeAttribute('disabled');
     } else {
-      alert('Виберіть дату із майбутнього!')
+      alert('Виберіть дату із майбутнього!');
     }
   },
 };
 
 flatpickr(refs.input, options);
 
-refs.startBtn.addEventListener('click', runTaimer)
+refs.startBtn.addEventListener('click', runTaimer);
 
 //  Запуск таймера
-function runTaimer(evt) {
-refs.startBtn.setAttribute('disabled', true)
-refs.input.setAttribute('disabled', true)
-intervalId = setInterval(startTaimer, 1000)
+function runTaimer() {
+  refs.startBtn.setAttribute('disabled', true);
+  refs.input.setAttribute('disabled', true);
+  intervalId = setInterval(startTaimer, 1000);
 }
 
-function startTaimer(evt) {
-  const setTime = timeEnd - new Date()
+function startTaimer() {
+  const setTime = timeEnd - new Date();
+  if (setTime < 1000) {
+    clearInterval(intervalId);
+    refs.startBtn.setAttribute('disabled', false);
+    refs.input.setAttribute('disabled', false);
+  }
   const time = convertMs(setTime);
 
-  uppdateCounter(time)
+  uppdateCounter(time);
 }
 
 function uppdateCounter({ days, hours, minutes, seconds }) {
@@ -73,12 +77,13 @@ function convertMs(ms) {
   // Remaining minutes
   const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
   // Remaining seconds
-  const seconds = addLeadingZero(Math.floor((((ms % day) % hour) % minute) / second));
+  const seconds = addLeadingZero(
+    Math.floor((((ms % day) % hour) % minute) / second)
+  );
 
   return { days, hours, minutes, seconds };
 }
 
-
 function addLeadingZero(value) {
-  return String(value).padStart(2, '0')
+  return String(value).padStart(2, '0');
 }
