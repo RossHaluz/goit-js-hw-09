@@ -1,8 +1,49 @@
+const form = document.querySelector('.form');
+let firstDelay = null;
+let delayStep = null;
+let amountPromise = null;
+
+form.addEventListener('submit', counterPromise)
+
+
 function createPromise(position, delay) {
-  const shouldResolve = Math.random() > 0.3;
+
+  return new Promise((resolve, reject) => {
+
+    setTimeout(() => {
+      const shouldResolve = Math.random() > 0.3;
   if (shouldResolve) {
-    // Fulfill
+    resolve({position, delay})
   } else {
-    // Reject
+    reject({position, delay})
   }
+  }, delay)
+    })
 }
+
+function counterPromise(evt) {
+  evt.preventDefault()
+  console.dir(form)
+  const { delay, step, amount } = evt.currentTarget.elements;
+  console.log(delay)
+  firstDelay = Number(delay.value);
+  delayStep = Number(step.value);
+  amountPromise = Number(amount.value);
+
+  console.log(typeof amountPromise)
+
+  for (i = 1; i <= amountPromise; i += 1){
+     createPromise(i, firstDelay)
+  .then(({ position, delay }) => {
+    console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
+  })
+  .catch(({ position, delay }) => {
+    console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+  });
+    
+    firstDelay += delayStep
+  }
+
+  evt.currentTarget.reset()
+  }
+  
