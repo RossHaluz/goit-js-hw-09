@@ -25,14 +25,10 @@ function createPromise(position, delay) {
 
 function counterPromise(evt) {
   evt.preventDefault()
-  console.dir(form)
   const { delay, step, amount } = evt.currentTarget.elements;
-  console.log(delay)
   firstDelay = Number(delay.value);
   delayStep = Number(step.value);
   amountPromise = Number(amount.value);
-
-  console.log(typeof amountPromise)
 
   for (i = 1; i <= amountPromise; i += 1){
      createPromise(i, firstDelay)
