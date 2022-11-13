@@ -1,14 +1,15 @@
-const refs = {
-    start: document.querySelector('button[data-start]'),
-    stop: document.querySelector('button[data-stop]'),
-}
+const btnStart = document.querySelector('button[data-start]');
+const btnStop = document.querySelector('button[data-stop]');
 
-refs.start.addEventListener('click', onClickStart);
-refs.stop.addEventListener('click', onClickStop);
+
+btnStart.addEventListener('click', onClickStart);
+btnStop.addEventListener('click', onClickStop);
 let intervalId = null;
+btnStop.setAttribute("disabled", true)
 
 function onClickStart(evt) { 
-  refs.start.setAttribute("disabled", true)
+  btnStart.setAttribute("disabled", true);
+  btnStop.removeAttribute("disabled");
   intervalId = setInterval(() => {
   document.body.style.backgroundColor = getRandomHexColor()
    }, 1000)
@@ -16,7 +17,8 @@ function onClickStart(evt) {
 }
 
 function onClickStop(evt) {
-  refs.start.removeAttribute('disabled')
+  btnStop.setAttribute("disabled", true);
+  btnStart.removeAttribute("disabled");
   clearInterval(intervalId)
   }
 

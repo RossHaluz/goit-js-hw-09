@@ -51,7 +51,7 @@ function startTaimer() {
   if (setTime < 1000) {
     clearInterval(intervalId);
     refs.startBtn.setAttribute('disabled', false);
-    refs.input.setAttribute('disabled', false);
+    refs.input.removeAttribute('disabled');
   }
   const time = convertMs(setTime);
 
